@@ -1,0 +1,42 @@
+  {
+  "metadata": {
+    "name": "This is test 1",
+    "author": "Testman Wood",
+    "category": "Friendship",
+    "summary": "This is a cool summary",
+    "description": "This is a neat description",
+    "cardImage": "http://media.iwm.org.uk/ciim5/141/192/large_000000.jpg"
+  },
+  "groups": [
+    {
+      "metadata": {
+        "name": "Intro"
+      },
+      "style": {
+        "color": "ff00ff"
+      },
+      "layers": [
+        {
+          "polygons": [
+            {
+              "lead": "",
+              "autoPlays": true,
+              "title": "Belgium",
+              "lead": "test polygon Lead",
+              "text": "This is a test polyon text",
+              "camera": {                
+            	"height": 0.5, 
+				"lat": 50.8, 
+				"lon": 4.4 
+              },
+              "autoPlays": true,
+              "bounds": [[68.935,-48.625],[69.58,-48.94],[70.525,-49.065],[70.56,-49.255],[70.28,-49.71],[68.745,-49.775],[68.72,-49.2425],[68.8675,-48.83],[68.935,-48.625]]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "mapType": "satellite",
+  "devTools": true
+}
