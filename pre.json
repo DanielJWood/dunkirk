@@ -1,0 +1,12 @@
+  {
+  "metadata": {
+    "name": "Dunkirk Map Color Test 7",
+    "author": "Daniel Wood",
+    "summary": "This is a collection summary",
+    "description": "This is a collection description",
+    "cardImage": "http://media.iwm.org.uk/ciim5/141/192/large_000000.jpg"
+  },
+  "groups": [],
+  "mapType": "dark",
+  "devTools": true
+}
