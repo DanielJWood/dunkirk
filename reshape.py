@@ -1,3 +1,4 @@
+import time
 import copy
 import csv
 import simplejson as json
@@ -25,7 +26,10 @@ with open('pre.json') as pre_data:
 
 output = copy.deepcopy(pre)
 index = {}
-# print output
+
+timeNow = time.strftime("%H:%M:%S")
+print timeNow
+output["metadata"]["name"] = "Dunkirk @ " + timeNow
 # # print groupTemplate
 # # print tempGroupTemplate
 # # tempGroupTemplate["lead"] = "Group Lead Test"
@@ -53,49 +57,81 @@ for i in range(1, len(rows)):
 		output["groups"].append(groupTemplate)
 		# print output
 
+# for every group, create polygons inside that group/card if they have the correct ID
 for j in range(0, len(output["groups"])):
 	for i in range(1,len(rows)):	
 		if rows[i][0] == output["groups"][j]["id"]:
 		
-			with open('polygonTemplate.json') as polygonTemplate_data:
-				polygonTemplate = json.load(polygonTemplate_data)
-
-			polygonTemplate["title"] = rows[i][3]
-			polygonTemplate["lead"] = rows[i][4]
-			polygonTemplate["text"] = rows[i][5]
-			polygonTemplate["style"]["color"] = rows[i][2]
-			polygonTemplate["camera"]["lat"] = float(rows[i][7])
-			polygonTemplate["camera"]["lon"] = float(rows[i][8])
-			polygonTemplate["camera"]["height"] = float(rows[i][9])
-
+			# Open GeoJSON from the csv row
 			with open(rows[i][1]) as json_data:
 			    d = json.load(json_data)
 
-			bounds = []
+			# for each item of MultiPolygon, create a polygon in eartheos
 
-			for i in range(0,len((d["features"][0]["geometry"]["coordinates"][0]))):
-				longitude = d["features"][0]["geometry"]["coordinates"][0][i][0]
-				latitude = d["features"][0]["geometry"]["coordinates"][0][i][1]
-				bounds.append([latitude,longitude])
+			if d["features"][0]["geometry"]["type"] == "MultiPolygon":
+				for k in range(0, len(d["features"][0]["geometry"]["coordinates"])):
 
-			polygonTemplate["bounds"] = bounds
+					with open('polygonTemplate.json') as polygonTemplate_data:
+						polygonTemplate = json.load(polygonTemplate_data)
 
-			# print pre["groups"][0]["layers"][0]["polygons"][0]["bounds"]
+					polygonTemplate["title"] = rows[i][3]
+					polygonTemplate["lead"] = rows[i][4]
+					polygonTemplate["text"] = rows[i][5]
+					polygonTemplate["style"]["color"] = rows[i][2]
+					polygonTemplate["camera"]["lat"] = float(rows[i][7])
+					polygonTemplate["camera"]["lon"] = float(rows[i][8])
+					polygonTemplate["camera"]["height"] = float(rows[i][9])
 
-			output["groups"][j]["layers"][0]["polygons"].append(polygonTemplate)
+					bounds = []
 
+					for x in range(0,len((d["features"][0]["geometry"]["coordinates"][k][0]))):
+						longitude = d["features"][0]["geometry"]["coordinates"][k][0][x][0]
+						latitude = d["features"][0]["geometry"]["coordinates"][k][0][x][1]
+						bounds.append([latitude,longitude])
 
+					polygonTemplate["bounds"] = bounds
 
-# with open('simple.geoJSON') as json_data:
-#     d = json.load(json_data)
+					# print pre["groups"][0]["layers"][0]["polygons"][0]["bounds"]
 
-# with open('simple2.geoJSON') as json_data2:
-#     d2 = json.load(json_data2)    
+					output["groups"][j]["layers"][0]["polygons"].append(polygonTemplate)
+			elif d["features"][0]["geometry"]["type"] == "Polygon":
+				with open('polygonTemplate.json') as polygonTemplate_data:
+					polygonTemplate = json.load(polygonTemplate_data)
 
+				polygonTemplate["title"] = rows[i][3]
+				polygonTemplate["lead"] = rows[i][4]
+				polygonTemplate["text"] = rows[i][5]
+				polygonTemplate["style"]["color"] = rows[i][2]
+				polygonTemplate["camera"]["lat"] = float(rows[i][7])
+				polygonTemplate["camera"]["lon"] = float(rows[i][8])
+				polygonTemplate["camera"]["height"] = float(rows[i][9])
 
+				bounds = []
 
-# print pre["groups"][0]["layers"][0]["polygons"][0]["bounds"]
-# print pre["groups"][0]["layers"][0]["polygons"][1]["bounds"]
+				for x in range(0,len((d["features"][0]["geometry"]["coordinates"][0]))):
+					longitude = d["features"][0]["geometry"]["coordinates"][0][x][0]
+					latitude = d["features"][0]["geometry"]["coordinates"][0][x][1]
+					bounds.append([latitude,longitude])
+
+				polygonTemplate["bounds"] = bounds
+
+				# print pre["groups"][0]["layers"][0]["polygons"][0]["bounds"]
+
+				output["groups"][j]["layers"][0]["polygons"].append(polygonTemplate)
+			else:
+				print "error in coords and polygon type"
+
+with open('May10.geojson') as May10_data:
+	May10 = json.load(May10_data)
+
+# print May10["features"][0]["geometry"]["type"]
+# print len(May10["features"][0]["geometry"]["coordinates"]) #Number of polygons
+# print len(May10["features"][0]["geometry"]["coordinates"][i]) #Index at polygon
+# print len(May10["features"][0]["geometry"]["coordinates"][i][0]) #number of coord-pairs on that polygon
+# print len(May10["features"][0]["geometry"]["coordinates"][i][0][j]) #Pair of coordinates
+# print len(May10["features"][0]["geometry"]["coordinates"][i][0][j][0]) #Longitude
+# print len(May10["features"][0]["geometry"]["coordinates"][i][0][j][1]) #latitude
+
 
 
 # for each date
