@@ -62,8 +62,9 @@ for j in range(0, len(output["groups"])):
 	for i in range(1,len(rows)):	
 		if rows[i][0] == output["groups"][j]["id"]:
 		
+			url = "editedshps/finished/json/" + rows[i][1]
 			# Open GeoJSON from the csv row
-			with open(rows[i][1]) as json_data:
+			with open(url) as json_data:
 			    d = json.load(json_data)
 
 			# for each item of MultiPolygon, create a polygon in eartheos
@@ -76,11 +77,12 @@ for j in range(0, len(output["groups"])):
 
 					polygonTemplate["title"] = rows[i][3]
 					polygonTemplate["lead"] = rows[i][4]
-					polygonTemplate["text"] = rows[i][5]
+					polygonTemplate["text"] = rows[i][5]					
 					polygonTemplate["style"]["color"] = rows[i][2]
 					polygonTemplate["camera"]["lat"] = float(rows[i][7])
 					polygonTemplate["camera"]["lon"] = float(rows[i][8])
 					polygonTemplate["camera"]["height"] = float(rows[i][9])
+					polygonTemplate["camera"]["duration"] = float(rows[i][12])
 
 					bounds = []
 
@@ -92,8 +94,10 @@ for j in range(0, len(output["groups"])):
 					polygonTemplate["bounds"] = bounds
 
 					# print pre["groups"][0]["layers"][0]["polygons"][0]["bounds"]
-
-					output["groups"][j]["layers"][0]["polygons"].append(polygonTemplate)
+					if output["groups"][j]["id"] == "0":						
+						output["layers"][0]["polygons"].append(polygonTemplate)
+					else: 
+						output["groups"][j]["layers"][0]["polygons"].append(polygonTemplate)
 			elif d["features"][0]["geometry"]["type"] == "Polygon":
 				with open('polygonTemplate.json') as polygonTemplate_data:
 					polygonTemplate = json.load(polygonTemplate_data)
@@ -121,8 +125,10 @@ for j in range(0, len(output["groups"])):
 			else:
 				print "error in coords and polygon type"
 
-with open('May10.geojson') as May10_data:
-	May10 = json.load(May10_data)
+output["layers"][0]["polygons"][0]["audioURL"] = "https://github.com/DanielJWood/dunkirk/blob/master/guns.mp3?raw=true"
+output["layers"][0]["polygons"][0]["title"] = "Prewar boundaries"
+
+print output["layers"][0]["polygons"][0]["audioURL"]
 
 # print May10["features"][0]["geometry"]["type"]
 # print len(May10["features"][0]["geometry"]["coordinates"]) #Number of polygons
@@ -132,32 +138,6 @@ with open('May10.geojson') as May10_data:
 # print len(May10["features"][0]["geometry"]["coordinates"][i][0][j][0]) #Longitude
 # print len(May10["features"][0]["geometry"]["coordinates"][i][0][j][1]) #latitude
 
-
-
-# for each date
-	# for each geo file in date
-		# for each polygon item of json
-			# if multipolygon
-				# for each in multipolygon
-					# reverse lat long, add in metadata
-			# if not multipolgyon
-				# reverse lat long, add in meta data
-
-
-
-# for i in range(0,len((d["features"][0]["geometry"]["coordinates"][0]))):
-# 	longitude = d["features"][0]["geometry"]["coordinates"][0][i][0]
-# 	latitude = d["features"][0]["geometry"]["coordinates"][0][i][1]
-# 	output1.append([latitude,longitude])
-
-# for i in range(0,len((d2["features"][0]["geometry"]["coordinates"][0]))):
-# 	longitude = d2["features"][0]["geometry"]["coordinates"][0][i][0]
-# 	latitude = d2["features"][0]["geometry"]["coordinates"][0][i][1]
-# 	output2.append([latitude,longitude])	
-
-# pre["groups"][0]["layers"][0]["polygons"][0]["bounds"] = output1	
-# pre["groups"][0]["layers"][0]["polygons"][1]["bounds"] = output2
-	
 # print output
 
 with open('simpleout.json', 'w') as f:
