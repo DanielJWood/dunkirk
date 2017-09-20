@@ -125,10 +125,11 @@ for j in range(0, len(output["groups"])):
 			else:
 				print "error in coords and polygon type"
 
-output["layers"][0]["polygons"][0]["audioURL"] = "https://github.com/DanielJWood/dunkirk/blob/master/guns.mp3?raw=true"
-output["layers"][0]["polygons"][0]["title"] = "Prewar boundaries"
+output["groups"][0]["layers"][0]["polygons"][0]["audioURL"] = "https://github.com/DanielJWood/dunkirk/blob/master/guns.mp3?raw=true"
+# output["layers"][0]["polygons"][0]["audioURL"] = "https://github.com/DanielJWood/dunkirk/blob/master/guns.mp3?raw=true"
+# output["layers"][0]["polygons"][0]["title"] = "Prewar boundaries"
 
-print output["layers"][0]["polygons"][0]["audioURL"]
+# print output["layers"][0]["polygons"][0]["audioURL"]
 
 # print May10["features"][0]["geometry"]["type"]
 # print len(May10["features"][0]["geometry"]["coordinates"]) #Number of polygons
