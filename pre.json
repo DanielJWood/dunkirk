@@ -1,12 +1,17 @@
   {
   "metadata": {
-    "name": "Dunkirk Map Color Test 7",
+    "name": "How did Dunkkirk Happen?",
     "author": "Daniel Wood",
-    "summary": "This is a collection summary",
-    "description": "This is a collection description",
-    "cardImage": "http://media.iwm.org.uk/ciim5/141/192/large_000000.jpg"
+    "summary": "How did the British Army find themselves trapped at Dunkirk?",
+    "description": "The recent film, \"Dunkirk\", traces the evacuation of the British Expeditionary Force from the shores of Dunkirk, France. But how did the French and BEF find themselves trapped at this long beach with limited access for ships? Explore the movements of German troops to find out.",
+    "cardImage": "https://upload.wikimedia.org/wikipedia/commons/8/88/Dunkirk_26-29_May_1940_NYP68075.jpg"
   },
+  "layers":[
+    {
+      "polygons": []
+    }
+  ],
   "groups": [],
-  "mapType": "dark",
+  "mapType": "moonlight",
   "devTools": true
 }

@@ -27,9 +27,9 @@ with open('pre.json') as pre_data:
 output = copy.deepcopy(pre)
 index = {}
 
-timeNow = time.strftime("%H:%M:%S")
-print timeNow
-output["metadata"]["name"] = "Dunkirk @ " + timeNow
+# timeNow = time.strftime("%H:%M:%S")
+# print timeNow
+# output["metadata"]["name"] = "Dunkirk @ " + timeNow
 # # print groupTemplate
 # # print tempGroupTemplate
 # # tempGroupTemplate["lead"] = "Group Lead Test"
@@ -122,7 +122,7 @@ for j in range(0, len(output["groups"])):
 				# print pre["groups"][0]["layers"][0]["polygons"][0]["bounds"]
 
 				output["groups"][j]["layers"][0]["polygons"].append(polygonTemplate)
-			else:
+			else:	
 				print "error in coords and polygon type"
 
 output["groups"][0]["layers"][0]["polygons"][0]["audioURL"] = "https://github.com/DanielJWood/dunkirk/blob/master/guns.mp3?raw=true"
@@ -141,6 +141,6 @@ output["groups"][0]["layers"][0]["polygons"][0]["audioURL"] = "https://github.co
 
 # print output
 
-with open('simpleout.json', 'w') as f:
+with open('dunkirk.json', 'w') as f:
     json.dump(output, f)    
 

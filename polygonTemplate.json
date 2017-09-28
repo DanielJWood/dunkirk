@@ -1,6 +1,6 @@
 {
   "title": "Belgium",
-  "autoPlays": true,
+  "autoPlays": false,
   "camera": {
     "height": 0.2, 
     "lat": 50.8, 
